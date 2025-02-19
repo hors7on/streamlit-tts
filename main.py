@@ -11,11 +11,19 @@ def generate_audio():
         tts.write_to_fp(audio_bytes)
         audio_bytes.seek(0)
         st.session_state.audio_bytes = audio_bytes
-        st.session_state.input_text = ""  # törli a bevitelt
+        st.session_state.input_text = ""  # kitöröljük a szöveget
 
-# Az enter lenyomására automatikusan lefut a callback
+# Enter lenyomásával azonnal lefut a callback
 st.text_input("Írd be a szöveget", key="input_text", on_change=generate_audio)
 st.checkbox("Lassított beszéd", key="slow_mode", value=False)
 
 if "audio_bytes" in st.session_state:
     st.audio(st.session_state.audio_bytes, format="audio/mp3")
+    st.markdown("""
+    <script>
+      const audio = window.parent.document.querySelector("audio");
+      if (audio) {
+        audio.play();
+      }
+    </script>
+    """, unsafe_allow_html=True)
