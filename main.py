@@ -22,6 +22,7 @@ if "audio_bytes" in st.session_state:
     st.markdown("""
     <script>
       const audio = window.parent.document.querySelector("audio");
+      console.log('audio', audio);
       if (audio) {
         audio.play();
       }
